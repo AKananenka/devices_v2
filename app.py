@@ -2,7 +2,6 @@ from flask import Flask, render_template, flash, request, redirect, url_for, ses
 from data import Devices
 from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
-from passlib.hash import sha256_crypt
 from functools import wraps
 
 app = Flask(__name__)
@@ -37,7 +36,7 @@ def about():
     return render_template('about.html')
 
 @app.route('/devices')
-@is_logged_in
+
 def devices():
     # Create cursor
     cur = mysql.connection.cursor()
@@ -76,7 +75,7 @@ def register():
         name = form.name.data
         email = form.email.data
         username = form.username.data
-        password = sha256_crypt.encrypt(str(form.password.data))
+        password = (str(form.password.data))
 
         # Create cursor
         cur = mysql.connection.cursor()
@@ -165,7 +164,7 @@ def add_device():
         hostname = form.hostname.data
         ip_address = form.ip_address.data
         user = form.user.data
-        passw = sha256_crypt.encrypt(str(form.passw.data))
+        passw = (str(form.passw.data))
 
         # Create cursor
         cur = mysql.connection.cursor()

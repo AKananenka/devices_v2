@@ -10,11 +10,11 @@
 	<div id="frmTest" tabindex="-1">
 	    <!-- CUTTED -->
     <div id="step1" class="modal-footer">
-        <form action="{{url_for('devices')}}">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="button" value="Delete" class="btn btn-danger" onclick="confirmDialog()">
+        <form action="{{url_for('login')}}">
+            <input type="submit" name="_method" value="DELETE">
+            <input type="button" value="Delete" class="btn btn-danger">
         </form> 
-		  <button type="button" class="btn btn-success" onclick="confirmDialog()"> Delete</button>
+		  <button type="button" class="btn btn-success" value="Delete"> Delete</button>
 		</div>
   </div>
   
@@ -27,7 +27,7 @@
         </div>
 				
 				<div class="modal-footer">
-					<a href="/devices" class="btn btn-outline-danger" role="button" aria-pressed="true" id="confirmOk"> Ok</a>
+					<a class="btn btn-outline-danger" role="button" aria-pressed="true" id="confirmOk"> Ok</a>
 		      <button type="button" class="btn btn-outline-secondary" id="confirmCancel">Cancel</button>
 		    </div>
 			</div>
