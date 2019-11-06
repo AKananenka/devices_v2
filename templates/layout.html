@@ -29,9 +29,9 @@
     </body>
     <script>
         var YOUR_MESSAGE_STRING_CONST = "";
-            $('#btnDelete').on('click', function(e){
-                confirmDialog(YOUR_MESSAGE_STRING_CONST, function(){
-                    //My code to delete
+            $('[value=Delete]').on('click', function(e){
+                confirmDialog(YOUR_MESSAGE_STRING_CONST, function(e){
+                    $(e).closest('form').trigger('submit')
                 });
             });
     
