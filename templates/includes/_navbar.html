@@ -17,22 +17,16 @@
         <a class="nav-link" href="/about">About</a>
       </li>
     </ul>
-    <ul class="navbar-nav navbar-right">
-      {% if session.logged_in %}
-        <li>
-          <a class="nav-link" href="/dashboard"><button type="button" class="btn btn-dark btn-sm">Dashboard </button><span class="sr-only">(current)</span></a>
-        </li>  
-        <li>
-          <a class="nav-link" href="/logout"><button type="button" class="btn btn-light btn-sm">{{session.username}} (Logout)</button> </a>
-        </li>
-      {% else %}
-        <li>
-          <a class="nav-link" href="/register"><button type="button" class="btn btn-dark btn-sm">Register</button> <span class="sr-only">(current)</span></a>
-        </li>
-        <li>
-          <a class="nav-link" href="/login"><button type="button" class="btn btn-dark btn-sm">Login</button><span class="sr-only">(current)</span></a>
-        </li>
-      {% endif %} 
-    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <div class="col-auto my-1">
+        {% if session.logged_in %}
+        <a href="/dashboard" class="btn btn-outline-light"  role="button" aria-pressed="true">Dashboard</a>
+        <a href="/logout" class="btn btn-outline-light"  role="button" aria-pressed="true">{{session.username}} (Logout)</a>
+        {% else %}
+        <a href="/register" class="btn btn-outline-light"  role="button" aria-pressed="true">Register</a>
+        <a href="/login" class="btn btn-outline-light"  role="button" aria-pressed="true">Login</a>
+        {% endif %}
+      </div>
+    </form>
   </div>
 </nav>
