@@ -4,5 +4,33 @@
   <div class="jumbotron text-center">
     <h1>Devices</h1>
     <p class="lead">Choose the wright side, Luke!!!</p>
-  </div>  
+  </div>
+  
+  <!-- Modal dialog -->
+	<div id="frmTest" tabindex="-1">
+	    <!-- CUTTED -->
+    <div id="step1" class="modal-footer">
+        <form action="{{url_for('devices')}}">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="button" value="Delete" class="btn btn-danger" onclick="confirmDialog()">
+        </form> 
+		  <button type="button" class="btn btn-success" onclick="confirmDialog()"> Delete</button>
+		</div>
+  </div>
+  
+    <!-- Modal confirm -->
+	<div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-title w-100">Are you sure want to delete this device?</h5> 
+        </div>
+				
+				<div class="modal-footer">
+					<a href="/devices" class="btn btn-outline-danger" role="button" aria-pressed="true" id="confirmOk"> Ok</a>
+		      <button type="button" class="btn btn-outline-secondary" id="confirmCancel">Cancel</button>
+		    </div>
+			</div>
+		</div>
+	</div>  
 {% endblock %}

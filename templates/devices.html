@@ -26,10 +26,11 @@
             <td>
                 <form action="{{url_for('delete_device', id=device.id)}}" method="post">
                   <input type="hidden" name="_method" value="DELETE">
-                  <input type="submit" value="Delete" class="btn btn-danger">
+                  <input type="button" value="Delete" class="btn btn-danger" onclick="confirmDialog()">
                 </form>
             </td>
         </tr>
+        
         {% endfor %}
     </table>
     <ul class="list-group">
@@ -37,4 +38,17 @@
             <li class="list-group-item"><a href="device/{{device.id}}">{{ device.hostname }}</a></li>
         {% endfor %}
     </ul>
+    <div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h5 class="modal-title w-100">Are you sure want to delete this device?</h5> 
+            </div>
+            <div class="modal-footer">
+              <a href="/devices" class="btn btn-outline-danger" role="button" aria-pressed="true" id="confirmOk"> Ok</a>
+              <button type="button" class="btn btn-outline-secondary" id="confirmCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+    </div>  
 {% endblock %}
