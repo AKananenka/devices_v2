@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Add device</h1>
+    {% from "includes/_formhelpers.html" import render_field  %}
+    <form method="POST" action="">
+        <div class="form-group">
+            {{render_field(form.model, class_="form-control")}}
+        </div>
+        <div class="form-group">
+            {{render_field(form.hostname, class_="form-control")}}
+        </div>
+        <div class="form-group">
+            {{render_field(form.ip_address, class_="form-control")}}
+        </div>
+        <div class="form-group">
+            {{render_field(form.user, class_="form-control")}}
+        </div>
+        <div class="form-group">
+             {{render_field(form.passw, class_="form-control")}}
+        </div>
+        <div class="form-group">
+            {{render_field(form.confirm, class_="form-control")}}
+        </div>
+        <p><input type="submit" class="btn btn-primary" value="Submit"></p>        
+    </form>
+{% endblock %}

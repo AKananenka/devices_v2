@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Devices</h1>
+    <p class="lead">Choose the wright side, Luke!!!</p>
+    <a class="nav-link" href="/add_device"><button type="button" class="btn btn-success btn-lr">Add device</button><span class="sr-only">(current)</span></a>
+    <hr>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Model</th>
+            <th>Hostname</th>
+            <th>IP-Address</th>
+            <th>User</th>
+            <th>Added Date</th>
+            <th></th>
+        </tr>
+        {% for device in nw_devices %}
+        <tr>
+            <td>{{device.id}}</td>
+            <td>{{device.model}}</td>
+            <td>{{device.hostname}}</td>
+            <td>{{device.ip_address}}</td>
+            <td>{{device.user}}</td>
+            <td>{{device.added_date}}</td>
+            <td>
+                <form action="{{url_for('delete_device', id=device.id)}}" method="post">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="submit" value="Delete" class="btn btn-danger">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <ul class="list-group">
+        {% for device in devices %}
+            <li class="list-group-item"><a href="device/{{device.id}}">{{ device.hostname }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
