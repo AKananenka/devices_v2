@@ -28,21 +28,18 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
     <script>
-        var YOUR_MESSAGE_STRING_CONST = "";
             $('[value=Delete]').on('click', function(){
                 frmParent = $(this).closest('form');
-                confirmDialog(YOUR_MESSAGE_STRING_CONST, function(){
+                confirmDialog(function(){
                     frmParent.trigger('submit')
                 });
             });
-    
-            function confirmDialog(message, onConfirm){
+            function confirmDialog(onConfirm){
                 var fClose = function(){
                     modal.modal("hide");
                 };
                 var modal = $("#confirmModal");
                 modal.modal("show");
-                $("#confirmMessage").empty().append(message);
                 $("#confirmOk").one('click', onConfirm);
                 $("#confirmOk").one('click', fClose);
                 $("#confirmCancel").one("click", fClose);
