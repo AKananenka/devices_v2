@@ -18,9 +18,24 @@
                 {% include 'includes/_messages.html' %}
                 {% block body %}{% endblock %}
             </div>
+
         </main>
         <!-- /.container -->
-
+        <!-- Modal confirm -->
+        <div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h5 class="modal-title w-100">Are you sure want to delete this device?</h5> 
+              </div>
+                        
+              <div class="modal-footer">
+                <a class="btn btn-outline-danger" role="button" aria-pressed="true" id="confirmOk"> Ok</a>
+                <button type="button" class="btn btn-outline-secondary" id="confirmCancel">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
