@@ -10,7 +10,7 @@ app = Flask(__name__)
 # Config MySQL
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Wertikus1'
+app.config['MYSQL_PASSWORD'] = 'test007'
 app.config['MYSQL_DB'] = 'devices'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 # init MySQL
@@ -183,6 +183,55 @@ def add_device():
 
         return redirect(url_for('add_device'))
     return render_template('add_device.html', form=form)
+
+class DeviceEditForm(Form):
+    model = StringField('Model', [validators.Length(min=1, max=50)])
+    hostname = StringField('Hostname', [validators.Length(min=1, max=50)])
+    ip_address = StringField('IP Address', [validators.Length(min=8, max=25)])
+    user = StringField('User', [validators.Length(min=4, max=25)])
+
+@app.route('/edit_device/<string:id>', methods=['GET', 'POST'])
+@is_logged_in
+def edit_device(id):
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Get device
+    result = cur.execute("SELECT * FROM nw_devices WHERE id=%s", [id])
+
+    device = cur.fetchone()
+    
+    # Get form
+    form = DeviceEditForm(request.form)
+
+    # Populate device form fields
+    form.model.data = device['model']
+    form.hostname.data = device['hostname']
+    form.ip_address.data = device['ip_address']
+    form.user.data = device['user']
+
+    if request.method == 'POST' and form.validate():
+        model = request.form['model']   
+        hostname = request.form['hostname']
+        ip_address = request.form['ip_address']
+        user = request.form['user']
+
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        # Execute query
+        cur.execute("UPDATE nw_devices SET model=%s, hostname=%s, ip_address=%s, user=%s WHERE id=%s", (model, hostname, ip_address, user, id))
+
+        # Commit to DB
+        mysql.connection.commit()
+
+        # Close connection
+        cur.close()
+
+        flash('Device successfuly edited', 'success')
+
+        return redirect(url_for('devices'))
+    return render_template('edit_device.html', form=form)
 
 @app.route('/delete_device/<string:id>', methods=['POST'])
 @is_logged_in

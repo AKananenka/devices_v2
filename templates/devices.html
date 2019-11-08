@@ -14,6 +14,7 @@
             <th>User</th>
             <th>Added Date</th>
             <th></th>
+            <th></th>
         </tr>
         {% for device in nw_devices %}
         <tr>
@@ -22,20 +23,16 @@
             <td>{{device.hostname}}</td>
             <td>{{device.ip_address}}</td>
             <td>{{device.user}}</td>
-            <td>{{device.added_date}}</td>
-            <td>
+            <td width=180>{{device.added_date}}</td>
+            <td width=60><a href="edit_device/{{device.id}}" class="btn btn-primary btn-sm" >Edit</a></td>
+            <td width=80>
                 <form action="{{url_for('delete_device', id=device.id)}}" method="post">
                   <input type="hidden" name="_method" value="DELETE">
-                  <input type="button" value="Delete" class="btn btn-danger">
+                  <input type="button" value="Delete" class="btn btn-danger btn-sm">
                 </form>
-            </td>
+            </td>       
         </tr>
         
         {% endfor %}
     </table>
-    <ul class="list-group">
-        {% for device in devices %}
-            <li class="list-group-item"><a href="device/{{device.id}}">{{ device.hostname }}</a></li>
-        {% endfor %}
-    </ul>
-{% endblock %}
+   {% endblock %}
