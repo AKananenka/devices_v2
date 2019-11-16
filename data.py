@@ -1,24 +1,13 @@
-def Devices():
 
-    devices = [
-        {
-            'id': 1,
-            'name': 'cisco-2960',
-            'hostname': 'sw1',
-            'ip': '192.168.1.2'
-        },
-        {
-            'id': 2,
-            'name': 'cisco-2950',
-            'hostname': 'sw2',
-            'ip': '192.168.2.2'
-        },
-        {
-            'id': 3,
-            'name': 'cisco-2960',
-            'hostname': 'sw3',
-            'ip': '192.168.3.2'
-        }
-    ]
+import MySQLdb
 
-    return devices
+mysql = MySQLdb.connect(host="localhost", user="testuser", password="test007", db="devices")
+cur = mysql.cursor()
+cur.execute("SELECT id, model, hostname, ip_address, user, added_date FROM nw_devices")
+
+nw = cur.fetchall()
+
+for dev in nw:
+    print(dev[1])
+
+mysql.close()
