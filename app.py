@@ -13,16 +13,19 @@ app = Flask(__name__)
 
 # Upload folder
 app.config['UPLOAD_FOLDER'] = 'static/Uploads'
+
 # Upload filesize
-MAX_FILE_SIZE = 16 * 1024 * 1024
-app.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
+MAX_FILE_SIZE = 6 * 1024 * 1024
+app.config['MAX_FILESIZE'] = 6 * 1024 * 1024
+
 # Allowed types of files
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'exe'])
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 # Config MySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'testuser'
+app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'test007'
 app.config['MYSQL_DB'] = 'devices'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
@@ -51,37 +54,44 @@ def about():
 
 def allowed_file_filesize(filesize):
 
-    if int(filesize) <= app.config["MAX_CONTENT_LENGTH"]:
+    if int(filesize) <= app.config["MAX_FILESIZE"]:
         return True
     else:
         return False
 
-@app.route('/about', methods=["POST"])
+@app.route('/about', methods=["GET", "POST"])
 def files_about():
     if request.method == 'POST':
-        if not allowed_file_filesize(request.cookies["filesize"]):
-            print("Filesize exceeded maximum limit")
-            return render_template('about.html')
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        
-        file = request.files['file']
-        if file.filename == '':
-            flash('No file selected for uploading')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash('File successfully uploaded')
-            return redirect('/about')
-        else:
-            flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
+
+        if request.files:
+            
+            if not allowed_file_filesize(request.cookies.get("filesize")):
+                flash('Filesize exceeded maximum limit', 'danger')
+                return redirect(request.url)
+            
+            
+            file = request.files['file']
+
+            if file.filename == '':
+                flash('No file selected for uploading', 'danger')
+                return redirect(request.url)
+
+            if not allowed_file(file.filename):
+                flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif', 'danger')
+                return redirect(request.url)
+                
+            else:
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                
+            flash('File successfully uploaded', 'success')
             return redirect(request.url)
 
-@app.errorhandler(Exception)
-def page_not_found(e):
-    return "Max size of upload file 16MB", 400
+# @app.errorhandler(Exception)
+# def page_not_found(e):
+#     flash('Max size of upload file 1MB', 'danger')
+#     return redirect(request.url)
+    
 
 @app.route('/devices')
 @is_logged_in
